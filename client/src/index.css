@@ -1,0 +1,681 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 142.1 76.2% 36.3%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 142.1 76.2% 36.3%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 144.9 80.4% 10%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 142.4 71.8% 29.2%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    transition: background-color 0.4s ease, color 0.3s ease;
+  }
+}
+
+/* ========== Smooth Theme Transition ========== */
+body, 
+.bg-background, 
+.bg-card,
+[class*="bg-"],
+header,
+nav {
+  transition-property: background-color, border-color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+/* Exclude elements that have their own animations */
+[style*="transform"], svg, canvas, .recharts-surface, .recharts-wrapper, motion, [data-motion] {
+  transition-property: none !important;
+}
+
+/* ========== Mobile Responsive ========== */
+@media (max-width: 640px) {
+  /* Disable tilt/parallax on touch devices (mobile) */
+  .sensor-card-glow,
+  [style*="perspective"] {
+    transform: none !important;
+  }
+
+  /* Compact card padding on mobile */
+  .card-hover:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  /* Stack grids to single column on small screens */
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Reduce text sizes */
+  h1 { font-size: 1.5rem !important; }
+
+  /* Compact spacing */
+  .space-y-12 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1.5rem;
+  }
+  .space-y-8 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem;
+  }
+  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem;
+  }
+  .gap-6 { gap: 0.75rem; }
+  .gap-4 { gap: 0.5rem; }
+  .py-6 { padding-top: 1rem; padding-bottom: 1rem; }
+  .px-4 { padding-left: 0.5rem; padding-right: 0.5rem; }
+  .p-6 { padding: 1rem; }
+}
+
+/* Tablet tweaks */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .card-hover:hover {
+    transform: translateY(-4px) scale(1.015);
+  }
+}
+
+/* Touch device detection — disable tilt via media query */
+@media (hover: none) and (pointer: coarse) {
+  .sensor-card-glow,
+  [style*="perspective"] {
+    transform: none !important;
+  }
+  .card-hover:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* ========== Premium Animations ========== */
+
+/* Pulse glow - used on status badges */
+@keyframes pulse-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 0.5rem rgba(34, 197, 94, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 0 1rem rgba(34, 197, 94, 0.4));
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Smooth float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Rotation */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-rotate {
+  animation: rotate 20s linear infinite;
+}
+
+/* ========== Custom Scrollbar ========== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.7);
+}
+
+/* ========== Glass / Gradient Effects ========== */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.dark .glass-effect {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gradient-green  { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
+.gradient-blue   { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+.gradient-red    { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+.gradient-yellow { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); }
+.gradient-purple { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+
+/* ========== Premium Card Hover Effects ========== */
+.card-hover {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.35s ease,
+              border-color 0.35s ease;
+  will-change: transform, box-shadow;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow:
+    0 20px 40px -10px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(34, 197, 94, 0.1);
+}
+
+.dark .card-hover:hover {
+  box-shadow:
+    0 20px 40px -10px rgba(0, 0, 0, 0.4),
+    0 0 20px -5px rgba(34, 197, 94, 0.1),
+    0 0 0 1px rgba(34, 197, 94, 0.15);
+}
+
+/* ========== Neon Edge Glow for Sensor Cards ========== */
+.sensor-card-glow {
+  position: relative;
+}
+.sensor-card-glow::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.sensor-card-glow:hover::after {
+  opacity: 1;
+}
+
+.sensor-card-glow.glow-red::after {
+  box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.15), 0 0 15px rgba(239, 68, 68, 0.1);
+}
+.sensor-card-glow.glow-blue::after {
+  box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.15), 0 0 15px rgba(59, 130, 246, 0.1);
+}
+.sensor-card-glow.glow-green::after {
+  box-shadow: inset 0 0 20px rgba(34, 197, 94, 0.15), 0 0 15px rgba(34, 197, 94, 0.1);
+}
+.sensor-card-glow.glow-yellow::after {
+  box-shadow: inset 0 0 20px rgba(234, 179, 8, 0.15), 0 0 15px rgba(234, 179, 8, 0.1);
+}
+.sensor-card-glow.glow-cyan::after {
+  box-shadow: inset 0 0 20px rgba(6, 182, 212, 0.15), 0 0 15px rgba(6, 182, 212, 0.1);
+}
+
+/* ========== Animated Top Bar Gradient ========== */
+.gradient-bar-animated {
+  background-size: 200% 100%;
+  animation: gradient-shift 3s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ========== Status Indicators ========== */
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.status-optimal  { background-color: #22c55e; box-shadow: 0 0 8px rgba(34, 197, 94, 0.6); }
+.status-warning  { background-color: #eab308; box-shadow: 0 0 8px rgba(234, 179, 8, 0.6); }
+.status-critical { background-color: #ef4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
+
+/* ========== Solar Power System Animations ========== */
+
+/* Sun spinning with glow */
+@keyframes sun-spin {
+  0% {
+    transform: rotate(0deg);
+    filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.9));
+  }
+  100% {
+    transform: rotate(360deg);
+    filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.6));
+  }
+}
+.animate-sun-spin {
+  animation: sun-spin 4s linear infinite;
+}
+
+/* Solar glow pulse */
+@keyframes solar-glow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(250, 204, 21, 0.2), 0 0 20px rgba(250, 204, 21, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(250, 204, 21, 0.4), 0 0 40px rgba(250, 204, 21, 0.2);
+  }
+}
+.solar-active-glow {
+  animation: solar-glow 2s ease-in-out infinite;
+}
+
+/* Battery charge pulse */
+@keyframes battery-charge-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+.battery-charging {
+  animation: battery-charge-pulse 1.5s ease-in-out infinite;
+}
+.battery-ring {
+  transition: stroke-dashoffset 1s ease-in-out;
+}
+
+/* Solar card border glow */
+.solar-card-glow {
+  position: relative;
+  overflow: hidden;
+}
+.solar-card-glow::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.3), rgba(34, 197, 94, 0.3), rgba(250, 204, 21, 0.3));
+  z-index: -1;
+  animation: solar-glow 2s ease-in-out infinite;
+}
+
+/* Sun rays */
+@keyframes sun-rays {
+  0%   { opacity: 0.4; transform: scale(1); }
+  50%  { opacity: 0.8; transform: scale(1.15); }
+  100% { opacity: 0.4; transform: scale(1); }
+}
+.sun-rays {
+  animation: sun-rays 2s ease-in-out infinite;
+}
+
+/* ========== Lightning Flicker (for charging icon) ========== */
+@keyframes lightning-flicker {
+  0%, 100% { opacity: 1; }
+  10% { opacity: 0.3; }
+  20% { opacity: 1; }
+  30% { opacity: 0.5; }
+  40% { opacity: 1; }
+  90% { opacity: 1; }
+}
+.lightning-flicker {
+  animation: lightning-flicker 2s ease-in-out infinite;
+}
+
+/* ========== Neon Ring Rotate (for solar battery ring) ========== */
+@keyframes ring-rotate-glow {
+  0% { filter: drop-shadow(0 0 4px rgba(34, 197, 94, 0.5)) hue-rotate(0deg); }
+  50% { filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.8)) hue-rotate(15deg); }
+  100% { filter: drop-shadow(0 0 4px rgba(34, 197, 94, 0.5)) hue-rotate(0deg); }
+}
+.ring-glow-animate {
+  animation: ring-rotate-glow 2s ease-in-out infinite;
+}
+
+/* ========== Smooth Value Transition ========== */
+.value-transition {
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ========== Remote Control Panel ========== */
+
+/* Panel glow when pump is ON */
+.rcp-glow-on {
+  box-shadow:
+    0 0 25px rgba(34, 197, 94, 0.08),
+    0 0 60px rgba(34, 197, 94, 0.04),
+    0 8px 32px -8px rgba(0, 0, 0, 0.12);
+  animation: rcp-pulse-on 3s ease-in-out infinite;
+}
+
+@keyframes rcp-pulse-on {
+  0%, 100% {
+    box-shadow:
+      0 0 25px rgba(34, 197, 94, 0.08),
+      0 0 60px rgba(34, 197, 94, 0.04),
+      0 8px 32px -8px rgba(0, 0, 0, 0.12);
+  }
+  50% {
+    box-shadow:
+      0 0 35px rgba(34, 197, 94, 0.14),
+      0 0 80px rgba(34, 197, 94, 0.06),
+      0 12px 40px -8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Panel when pump is OFF */
+.rcp-glow-off {
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.7s ease;
+}
+
+/* Badge pulse for running pump */
+.rcp-badge-pulse {
+  animation: rcp-badge-glow 2s ease-in-out infinite;
+}
+
+@keyframes rcp-badge-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.25);
+  }
+}
+
+/* Dark mode overrides */
+.dark .rcp-glow-on {
+  box-shadow:
+    0 0 30px rgba(34, 197, 94, 0.1),
+    0 0 80px rgba(34, 197, 94, 0.05),
+    0 8px 32px -8px rgba(0, 0, 0, 0.3);
+}
+
+.dark .rcp-glow-off {
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== Card Enter Animation ========== */
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.card-enter {
+  animation: card-enter 0.5s ease-out forwards;
+}
+.card-enter-1 { animation-delay: 0.05s; }
+.card-enter-2 { animation-delay: 0.10s; }
+.card-enter-3 { animation-delay: 0.15s; }
+.card-enter-4 { animation-delay: 0.20s; }
+.card-enter-5 { animation-delay: 0.25s; }
+.card-enter-6 { animation-delay: 0.30s; }
+
+/* ========== Premium UI Custom Additions ========== */
+
+/* Pump rotation animation */
+@keyframes pump-rotation {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-pump-spin {
+  animation: pump-rotation 1.5s linear infinite;
+}
+
+/* Water flow wave pulse */
+@keyframes water-flow-pulse {
+  0%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 0.4;
+  }
+  50% {
+    stroke-dashoffset: -20;
+    opacity: 0.95;
+    filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.6));
+  }
+}
+.animate-flow-pulse {
+  animation: water-flow-pulse 2s linear infinite;
+}
+
+/* Glowing LED relays */
+@keyframes led-glowing {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 4px currentColor, inset 0 0 2px rgba(255,255,255,0.6);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 12px currentColor, 0 0 20px currentColor, inset 0 0 4px rgba(255,255,255,0.8);
+    opacity: 1;
+  }
+}
+.animate-led-glow {
+  animation: led-glowing 1.5s ease-in-out infinite;
+}
+
+/* Red Emergency Stop pulse */
+@keyframes estop-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6), inset 0 4px 6px rgba(0,0,0,0.4);
+  }
+  50% {
+    box-shadow: 0 0 25px 8px rgba(239, 68, 68, 0.45), inset 0 4px 6px rgba(0,0,0,0.3);
+  }
+}
+.animate-estop-pulse {
+  animation: estop-pulse 1.8s ease-in-out infinite;
+}
+
+/* Premium Adaptive Mesh Background */
+.mesh-bg {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(34, 197, 94, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.09) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(6, 182, 212, 0.06) 0px, transparent 50%);
+  background-attachment: fixed;
+  transition: background-color 0.5s ease;
+}
+
+.dark .mesh-bg {
+  background-color: #080c15;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.16) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.18) 0px, transparent 55%),
+    radial-gradient(at 50% 100%, rgba(6, 182, 212, 0.12) 0px, transparent 50%);
+}
+
+/* Glass panel styled container */
+.glass-container {
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 0 10px 40px -10px rgba(31, 38, 135, 0.06) !important;
+}
+
+.dark .glass-container {
+  background: rgba(13, 20, 35, 0.45) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  box-shadow: 0 16px 45px -10px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Neon glow tags */
+.neon-glow-emerald {
+  filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.35));
+}
+.neon-glow-indigo {
+  filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.35));
+}
+.neon-glow-rose {
+  filter: drop-shadow(0 0 6px rgba(244, 63, 94, 0.35));
+}
+
+/* Wave motion inside the reservoir tank */
+@keyframes wave-move {
+  0% { transform: translateX(0) scaleY(1); }
+  50% { transform: translateX(-12px) scaleY(1.05); }
+  100% { transform: translateX(0) scaleY(1); }
+}
+.animate-water-wave {
+  animation: wave-move 5s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+/* Bubbles rising inside the tank */
+@keyframes bubble-rise {
+  0% { transform: translateY(140px) translateX(0) scale(0.4); opacity: 0; }
+  15% { opacity: 0.7; }
+  85% { opacity: 0.7; }
+  100% { transform: translateY(0px) translateX(5px) scale(1); opacity: 0; }
+}
+.animate-bubble-rise-slow {
+  animation: bubble-rise 7s infinite linear;
+}
+.animate-bubble-rise-medium {
+  animation: bubble-rise 4.5s infinite linear;
+}
+.animate-bubble-rise-fast {
+  animation: bubble-rise 3s infinite linear;
+}
+
+/* Dripping water drop inlet effect */
+@keyframes drip {
+  0% { transform: translateY(0) scaleY(1); opacity: 1; }
+  75% { opacity: 1; }
+  100% { transform: translateY(140px) scaleY(1.5); opacity: 0; }
+}
+.animate-drip {
+  animation: drip 1.4s infinite cubic-bezier(0.5, 0, 1, 1);
+}
+
+/* Power flow route particle animation */
+@keyframes flow-forward {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+@keyframes flow-reverse {
+  to {
+    stroke-dashoffset: 20;
+  }
+}
+.animate-flow-forward {
+  stroke-dasharray: 6 4;
+  animation: flow-forward 0.8s linear infinite;
+}
+.animate-flow-reverse {
+  stroke-dasharray: 6 4;
+  animation: flow-reverse 0.8s linear infinite;
+}
+
+/* Slow rotate clockwise/counter-clockwise for solar system background rings */
+@keyframes spin-clockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes spin-counterclockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.animate-spin-slow {
+  animation: spin-clockwise 25s linear infinite;
+}
+.animate-spin-reverse-slow {
+  animation: spin-counterclockwise 30s linear infinite;
+}
+
+/* Animated raindrops falling */
+@keyframes rain-fall {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -40;
+  }
+}
+.animate-rain-fall {
+  stroke-dasharray: 4 10;
+  animation: rain-fall 0.6s linear infinite;
+}
+
+/* Cloud drift animation for Weather Card background */
+@keyframes cloud-drift {
+  0%, 100% { transform: translateX(0px); }
+  50% { transform: translateX(10px); }
+}
+.animate-cloud-drift {
+  animation: cloud-drift 10s ease-in-out infinite;
+}
+
+/* Vegetation swaying animation (banana leaves, tomato vines) */
+@keyframes sway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(3deg); }
+}
+.animate-sway {
+  animation: sway 3.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+.animate-sway-delayed {
+  animation: sway 4s ease-in-out infinite;
+  animation-delay: 1.2s;
+  transform-origin: bottom center;
+}
+
+
