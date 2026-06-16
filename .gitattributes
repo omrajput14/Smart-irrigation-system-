@@ -1,0 +1,6 @@
+# Mark client folder as vendored so it does not count towards repository language statistics
+client/** linguist-vendored
+
+# Ensure Python and C++ files are explicitly detectable
+backend/**/*.py linguist-detectable=true
+iot/**/*.ino linguist-detectable=true
