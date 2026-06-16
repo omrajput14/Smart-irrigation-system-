@@ -38,3 +38,5 @@ client/tmp/node-compile-cache/
 node_modules/
 dist/
 build/
+venv/
+.venv/
