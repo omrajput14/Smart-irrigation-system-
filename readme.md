@@ -1,97 +1,135 @@
-# 🌱 Smart Irrigation System (Blynk Cloud Powered)
+# 🌱 EcoIrrigate: Smart Irrigation & Farm Intelligence Platform (v2)
 
-A modern, serverless **Smart Irrigation System** built with **ESP8266**, **Blynk IoT Cloud**, and a futuristic **React.js Dashboard**. Designed to autonomously monitor **soil moisture**, **temperature**, and **rain detection** to control a water pump, ensuring efficient water usage and real-time remote management.
+EcoIrrigate is a premium, cloud-integrated **Smart Irrigation & Farm Intelligence System** that combines physical microcontrollers, real-time telemetry pipelines, and predictive AI heuristics. It features an immersive **2.5D isometric farm digital twin blueprint** to monitor soil moisture, manage renewable solar grids, track water reservoir consumption, and dynamically automate field irrigation.
 
----
-
-## 📸 Dashboard Showcase
-
-
-
-![Dashboard Analytics & Charts](./images/dashboard-top.png)
-![Remote Control & Live Gauges](./images/dashboard-bottom.png)
+[![React](https://img.shields.io/badge/Frontend-React%20v19-blue?style=for-the-badge&logo=react)](https://react.dev)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-emerald?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
+[![Supabase](https://img.shields.io/badge/Database-Supabase%20PostgreSQL-darkblue?style=for-the-badge&logo=supabase)](https://supabase.com)
+[![Vercel](https://img.shields.io/badge/Hosting-Vercel%20Serverless-black?style=for-the-badge&logo=vercel)](https://vercel.com)
+[![IoT](https://img.shields.io/badge/Hardware-ESP8266%20%2F%20NodeMCU-orange?style=for-the-badge&logo=espressif)](https://www.espressif.com)
 
 ---
 
-## 🏛 Architecture (Serverless V2)
+## 📸 Interactive System Showcase
 
-We recently migrated this project to a serverless architecture for incredible speed, 100% uptime, and zero-maintenance backend hosting! Gone are the days of manually hosting Node.js servers.
+### 🏡 1. Sleek Dashboard Landing
+A clean split-screen hero design separates copy from interactive smart agricultural controls, showcasing sun, clouds, solar relays, battery charge indicators, and pipeline structures.
+![Dashboard Landing](./images/1_home_hero.png)
+
+### 💧 2. Live Operations Panel
+Skeuomorphic aquifer storage gauges fill and deplete dynamically, tracking a real-time water budget alongside solar panel output charging vectors and live meteorological sensors.
+![Live Operations](./images/2_live_operations.png)
+
+### 🌾 3. Crop-Specific Zone Controllers
+Interactive control tiles for individual zones (Banana, Tomato, Sugarcane) equipped with moisture gauges, sparkline trends, auto-watering rules, and physical solenoid manual overrides.
+![Zone Control](./images/3_zone_control.png)
+
+### 📊 4. In-depth Data Analytics
+Circular gauges with telemetry logs display sensor allocations, flow rates (L/min), battery reserves (%), and water savings metrics dynamically pulled from the cloud database.
+![Farm Analysis](./images/5_farm_analysis.png)
+
+### 🧠 5. AI Diagnostics & Warnings
+Calculates evaporative loss thresholds based on heat index (DHT11/LM35), triggering warnings, telemetry flags, and crop hydration advice.
+![Smart Insights](./images/6_smart_insights.png)
+
+### 📈 6. Multi-Zone Historical Trends
+Interactive multi-line area charts (powered by Recharts) visualize soil moisture trends, water consumption volumes, and solar efficiency.
+![Sensor History](./images/4_sensor_history.png)
+
+---
+
+## 🏛️ System Architecture & Data Pipeline
+
+EcoIrrigate utilizes a high-efficiency bidirectional data loop. Edge sensors feed telemetry packet streams into the FastAPI serverless API, updating the live Supabase PostgreSQL database while dynamically adjusting pump actuators.
+
+![EcoIrrigate Pipeline](./images/7_about_architecture.png)
 
 ```text
-[ ESP8266 + Sensors ]  --WiFi/REST-->  [ Blynk IoT Cloud ] 
-                                                |
-                                                ↓
-                                      [ React Web Dashboard (Vercel) ]
+[ Microcontroller: ESP8266 ]
+          │ (Reads DHT11 Temperature/Humidity + Soil Moisture + Rain)
+          ▼
+   [ FastAPI Gateway ] ──(Syncs & Restructures Data)──► [ Supabase Cloud Database ]
+          │                                                       │
+          │ (Runs Predictive AI Scoring & Checks Thresholds)     │
+          ▼                                                       ▼
+  [ Automated Relay Toggles ] ◄──(Updates Dashboard UI)── [ Live React.js Frontend ]
 ```
 
----
-
-## ⚙️ Features
-- 📶 **Serverless Data Streaming**: No Node.js backend required! Direct ESP8266 to Blynk Cloud REST polling.
-- 🌡️ **Live Environmental Monitoring**: Tracks Temperature, Soil Moisture (Raw Analog), and Rain Intensity.
-- 💧 **AI-Powered Irrigation Logic**: Automatically calculates an "Irrigation Score" using multi-sensor conditions.
-- 🌦️ **Rain-Aware**: Automatically halts irrigation cycles if precipitation is detected.
-- 🎮 **Manual Remote Override**: Fully control the physical pump remotely via the glowing web dashboard.
-- 📊 **Historical Vitals**: Plots real-time data onto beautiful area charts using Recharts.
+### ⚙️ How It Works
+1. **Sense**: ESP microcontrollers poll capacitive moisture, temperature, and rain sensors every 3 seconds.
+2. **Analyze**: The backend API processes raw readings, computing an **Irrigation Score** based on soil levels, solar efficiency, and rain probability.
+3. **Irrigate**: Physical pump relays fire automatically when thresholds are crossed, or via direct override toggles on the React dashboard.
 
 ---
 
-## 🧩 Technology Stack
+## 🔌 Pin Connections & Hardware Spec
 
-| Component         | Technology |
-|-------------------|-------------------------|
-| **Microcontroller**   | ESP8266 (NodeMCU)        |
-| **Sensors**           | DHT11/LM35, Analog Soil Moisture, Digital Rain Sensor |
-| **IoT Platform**      | Blynk Cloud (REST APIs & Virtual Pins) |
-| **Frontend**          | React.js, Vite, TailwindCSS, Framer Motion, Shadcn UI |
-| **Hosting**           | Vercel |
+### ☁️ Blynk Virtual Pin Mapping
+| Virtual Pin | Data Stream | Data Type | Purpose |
+|---|---|---|---|
+| `V0` | Soil Moisture | Raw Analog (0-1023) | Moisture percentage conversion |
+| `V1` | Remote Command | Boolean (0 = Auto/OFF, 1 = Manual ON) | Toggles pump relay override state |
+| `V5` | Pump Status | String ("ON" / "OFF") | Reflects state of physical solenoid |
+| `V6` | Temperature | Float / Integer | Ambient air temperature reading |
+| `V7` | Rain Status | String ("Rain" / "Clear") | Weather status trigger |
+
+### 🔌 Physical ESP8266 NodeMCU Wiring
+| Pin | Interface Type | Connected Sensor / Actuator |
+|---|---|---|
+| **A0** | Analog | Soil Moisture Probe |
+| **D1 (GPIO5)** | Digital Input | Rain Sensor Module |
+| **D2 (GPIO4)** | Digital (One-Wire) | DHT11 / LM35 Temperature & Humidity Sensor |
+| **D5 (GPIO14)** | Digital Output | Relay Module (Borewell Solenoid Pump) |
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Component | Description |
+|---|---|---|
+| **Frontend** | React.js (v19) | Modern UI with Tailwind CSS and Framer Motion transitions |
+| | Recharts | Interactive SVG telemetry charts and historical trend logs |
+| **Backend** | FastAPI (Python) | High-performance asynchronous API endpoints |
+| | Uvicorn | Asynchronous Server Gateway Interface (ASGI) server |
+| **Database** | Supabase | Cloud-hosted PostgreSQL instance for telemetry tracking |
+| **IoT Cloud** | Blynk IoT | Cloud interface for microcontroller relay triggers |
 
 ---
 
 ## 🚀 Quick Setup Instructions
 
-### 📡 1. ESP8266 Firmware (Hardware)
-1. Open Arduino IDE and install the `BlynkSimpleEsp8266`.
-2. Navigate to `iot/ESP8266/ESP8266.ino`.
-3. Enter your WiFi credentials and your **Blynk Auth Token**.
-4. Flash the NodeMCU!
+### 📡 1. Supabase Database Setup
+Execute the DDL schema script in your Supabase SQL editor:
+```bash
+# Apply tables, foreign keys, and default schema policies
+backend/schema.sql
+```
+Next, seed the initial database telemetry values:
+```bash
+# Install virtualenv dependencies
+cd backend
+venv/bin/pip install -r requirements.txt
 
-### 🌐 2. Client Dashboard (Software)
+# Run the seeding script
+venv/bin/python seed_supabase.py
+```
+
+### 💻 2. Local Dashboard Development
+Start the FastAPI backend server:
+```bash
+cd backend
+venv/bin/python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
+```
+Start the React frontend development server:
 ```bash
 cd client
 npm install
 npm run dev
 ```
 
----
+### ☁️ 3. Deploying to Vercel (Production)
+The repository is pre-configured with a dual-build [vercel.json](file:///Users/0mrajput/Desktop/hoilday projects /Smart-irrigation-system--main/vercel.json) config that deploys the Vite frontend statically and routes `/api/*` requests to your FastAPI backend serverless function.
 
-## 🛠️ Pin Connections (Virtual & Physical)
-
-### ☁️ Blynk Virtual Pins
-| Pin | Data Stream | Data Type |
-|---|---|---|
-| `V0` | Soil Moisture | Raw Analog (0-1023) |
-| `V6` | Temperature | Float / Integer |
-| `V5` | Pump Status | String ("ON" / "OFF") |
-| `V7` | Rain Status | String ("Rain" / "Clear") |
-| `V1` | Remote Command | Boolean (0 = Auto/OFF, 1 = Manual ON) |
-
-### 🔌 Physical ESP8266 Pins
-| ESP8266 Pin | Connected To |
-|-------------|---------------------------------|
-| `A0` (Analog) | Soil Moisture Sensor |
-| `D2` (GPIO4)  | LM35 / DHT11 Data Pin |
-| `D1` (GPIO5)  | Rain Sensor Output (Digital)    |
-| `D5` (GPIO14) | Relay Module / Pump |
-
----
-
-## ⚡ Troubleshooting
-| Problem | Solution |
-|---|---|
-| **Vercel Deployment throwing 404** | We have included a `vercel.json` rewrites file. Just ensure Vercel's "Root Directory" setting is configured to `client/` inside the Vercel project Settings. |
-| **Pump not switching ON/OFF** | Verify that `V1` is correctly sending a `1` or `0` via the Remote Control panel in the dashboard. |
-
-
-
-
+Just add your cloud database credentials to the **Environment Variables** in your Vercel Project Settings:
+* `SUPABASE_URL` = `https://your-project.supabase.co`
+* `SUPABASE_KEY` = `your-secret-service-key`
