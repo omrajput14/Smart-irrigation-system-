@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Temporary and compiled files
+tmp/
+test-render.compiled.js
+node-compile-cache/
+node_modules/
+dist/
+build/

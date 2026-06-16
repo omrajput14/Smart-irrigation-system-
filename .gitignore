@@ -30,3 +30,11 @@ node_modules
 *.log
 *.jpeg
 *.csv
+
+# Temporary and compiled files
+client/tmp/
+client/test-render.compiled.js
+client/tmp/node-compile-cache/
+node_modules/
+dist/
+build/
