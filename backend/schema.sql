@@ -56,13 +56,14 @@ CREATE POLICY "Allow public insert access" ON public.solar_telemetry FOR INSERT 
 CREATE TABLE IF NOT EXISTS public.sensor_history (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     timestamp TIMESTAMPTZ DEFAULT NOW(),
-    moisture_A INTEGER NOT NULL,
-    moisture_B INTEGER NOT NULL,
-    moisture_C INTEGER NOT NULL,
+    "moisture_A" INTEGER NOT NULL,
+    "moisture_B" INTEGER NOT NULL,
+    "moisture_C" INTEGER NOT NULL,
     water_used INTEGER DEFAULT 0,
     solar_power INTEGER DEFAULT 0,
     battery INTEGER DEFAULT 80
 );
+
 
 ALTER TABLE public.sensor_history ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read access" ON public.sensor_history FOR SELECT USING (true);
