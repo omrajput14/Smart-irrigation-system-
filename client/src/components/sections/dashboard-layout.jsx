@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { Home, BarChart2, History, PieChart, Lightbulb, Info, Mail, Menu, X } from "lucide-react"
+import { Home, BarChart2, History, PieChart, Lightbulb, Info, Menu, X } from "lucide-react"
 import { cn } from "../../lib/utils"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/sections/theme-toggle"
@@ -17,7 +17,6 @@ export function DashboardLayout({ children }) {
     { name: "Analysis", href: "/analysis", icon: PieChart },
     { name: "Insights", href: "/insights", icon: Lightbulb },
     { name: "About", href: "/about", icon: Info },
-    { name: "Contact Us", href: "/contact", icon: Mail },
   ]
 
   return (

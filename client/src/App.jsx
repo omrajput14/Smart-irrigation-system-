@@ -6,7 +6,6 @@ import { HistoryPage } from "./components/sections/history-page";
 import { AnalysisPage } from "./components/sections/analysis-page";
 import { InsightsPage } from "./components/sections/insights-page";
 import { AboutPage } from "./components/sections/about-page";
-import { ContactPage } from "./components/sections/contact-page";
 import { FarmProvider } from "./context/FarmContext";
 
 function App() {
@@ -20,7 +19,6 @@ function App() {
           <Route path="/analysis" element={<AnalysisPage />} />
           <Route path="/insights" element={<InsightsPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </DashboardLayout>
     </FarmProvider>

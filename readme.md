@@ -92,13 +92,6 @@ npm run dev
 | **Vercel Deployment throwing 404** | We have included a `vercel.json` rewrites file. Just ensure Vercel's "Root Directory" setting is configured to `client/` inside the Vercel project Settings. |
 | **Pump not switching ON/OFF** | Verify that `V1` is correctly sending a `1` or `0` via the Remote Control panel in the dashboard. |
 
----
 
-## ✨ Credits
-> **Developed by Om Rajput **  
-> Built for modern Smart Farming capabilities. 
 
----
 
-## 📄 License
-This project is licensed under the MIT License.

@@ -249,25 +249,6 @@ export function AboutPage() {
         </Card>
       </motion.div>
 
-      {/* ── FOOTER SIGNATURE ── */}
-      <motion.div variants={iV}>
-        <Card className="border-none glass-container overflow-hidden">
-          <CardContent className="p-6 text-center space-y-3.5">
-            <h3 className="text-base font-bold text-gray-800 dark:text-gray-100">Built with ❤️ by Om Rajput</h3>
-            <p className="text-xs text-muted-foreground">Smart Irrigation System — IoT + Firebase + React + FastAPI</p>
-            <div className="flex gap-2 justify-center flex-wrap">
-              {[
-                { label: "IoT", cls: "bg-green-100/60 text-green-700 dark:bg-green-950/40 dark:text-green-400 border border-green-500/10 neon-glow-emerald" },
-                { label: "Firebase", cls: "bg-blue-100/60 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400 border border-blue-500/10" },
-                { label: "React", cls: "bg-purple-100/60 text-purple-700 dark:bg-purple-950/40 dark:text-purple-400 border border-purple-500/10" },
-                { label: "Solar", cls: "bg-yellow-100/60 text-yellow-700 dark:bg-yellow-950/40 dark:text-yellow-400 border border-yellow-500/10" },
-              ].map((b) => (
-                <Badge key={b.label} className={cn("rounded-full px-2.5 py-0.5 text-[10px] font-semibold border-0", b.cls)}>{b.label}</Badge>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
     </motion.div>
   )
 }
