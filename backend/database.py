@@ -1,6 +1,10 @@
 import os
 import json
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 
 DB_FILE = Path(__file__).parent / "data" / "db.json"
 
