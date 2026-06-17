@@ -28,12 +28,12 @@ export function DashboardLayout({ children }) {
             {/* Logo — always visible */}
             <Link to="/" className="flex items-center space-x-2 mr-2 sm:mr-4">
               <div className="relative h-7 w-7 sm:h-8 sm:w-8">
-                <svg viewBox="0 0 24 24" className="h-7 w-7 sm:h-8 sm:w-8 text-green-600">
+                <svg viewBox="0 0 24 24" className="h-7 w-7 sm:h-8 sm:w-8 text-primary">
                   <path fill="currentColor" d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7Z" />
                   <path fill="currentColor" d="M12,7V12L15,10.5L12,7" />
                 </svg>
               </div>
-              <span className="font-bold text-lg sm:text-xl text-green-600 hidden xs:inline">EcoIrrigate</span>
+              <span className="font-header font-black text-lg sm:text-xl text-primary tracking-tight hidden xs:inline">EcoIrrigate</span>
             </Link>
 
             {/* Mobile hamburger */}
@@ -64,13 +64,13 @@ export function DashboardLayout({ children }) {
                     key={item.name}
                     to={item.href}
                     className={cn(
-                      "flex items-center px-3 lg:px-4 py-2 font-medium transition-all duration-200 rounded-md relative",
+                      "font-header flex items-center px-3 lg:px-4 py-2 text-xs uppercase tracking-wider transition-all duration-200 rounded-lg relative",
                       location.pathname === item.href
-                        ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+                        ? "bg-primary/10 text-primary font-bold border border-primary/20"
                         : "text-foreground/60 hover:text-foreground/80 hover:bg-muted/50",
                     )}
                   >
-                    <item.icon className="mr-1.5 h-4 w-4" />
+                    <item.icon className="mr-1.5 h-3.5 w-3.5" />
                     <span className="hidden lg:inline">{item.name}</span>
                     <span className="lg:hidden text-xs">{item.name.split(" ")[0]}</span>
                   </Link>
@@ -79,9 +79,9 @@ export function DashboardLayout({ children }) {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <div className="hidden sm:flex items-center">
-              <div className="h-2 w-2 rounded-full bg-green-500 mr-2 animate-pulse"></div>
-              <span className="text-xs sm:text-sm text-muted-foreground">Connected</span>
+            <div className="hidden sm:flex items-center font-header text-xs uppercase tracking-wider">
+              <div className="h-2 w-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></div>
+              <span className="text-muted-foreground">Connected</span>
             </div>
             {/* Mobile: just show green dot */}
             <div className="sm:hidden flex items-center">
@@ -129,9 +129,9 @@ export function DashboardLayout({ children }) {
                   <Link
                     to={item.href}
                     className={cn(
-                      "flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors",
+                      "font-header flex items-center px-4 py-3 text-xs uppercase tracking-wider rounded-lg transition-colors",
                       location.pathname === item.href
-                        ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+                        ? "bg-primary/10 text-primary font-bold border border-primary/20"
                         : "text-foreground/60 hover:bg-muted/50",
                     )}
                     onClick={() => setIsMobileMenuOpen(false)}

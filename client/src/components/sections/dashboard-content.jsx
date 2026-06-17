@@ -175,14 +175,14 @@ export function DashboardContent() {
       {/* ── TOP HEADER ── */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-gray-150 dark:border-gray-800 pb-5">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-header font-black tracking-tight bg-gradient-to-r from-emerald-800 via-emerald-600 to-amber-700 dark:from-emerald-400 dark:via-emerald-500 dark:to-amber-500 bg-clip-text text-transparent">
             Farm Intelligence Dashboard
           </h1>
           <p className="text-sm text-muted-foreground mt-1">Smart Irrigation & Renewable Solar Energy Management (v2)</p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <Badge variant="outline" className={cn(
-            "flex items-center gap-1.5 px-3 py-1 border-0 shadow-sm",
+            "flex items-center gap-1.5 px-3 py-1 border-0 shadow-sm font-header text-[10px] uppercase tracking-wider",
             !loading 
               ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400" 
               : "bg-amber-50 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400"
@@ -190,8 +190,8 @@ export function DashboardContent() {
             {!loading ? <Wifi className="h-3.5 w-3.5" /> : <WifiOff className="h-3.5 w-3.5 animate-pulse" />}
             {!loading ? "System Online" : "Syncing Blynk..."}
           </Badge>
-          <div className="text-xs text-muted-foreground flex items-center gap-1.5 bg-white dark:bg-gray-900 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-gray-800">
-            <Clock className="h-3.5 w-3.5 text-indigo-500" />
+          <div className="text-xs text-muted-foreground flex items-center gap-1.5 bg-white dark:bg-gray-900 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-gray-800 font-telemetry">
+            <Clock className="h-3.5 w-3.5 text-primary" />
             {new Date().toLocaleTimeString()}
           </div>
           <Button
@@ -199,9 +199,9 @@ export function DashboardContent() {
             size="sm"
             onClick={refreshData}
             disabled={loading}
-            className="h-9 transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="h-9 transition-all hover:bg-gray-100 dark:hover:bg-gray-850 font-header text-xs uppercase tracking-wider"
           >
-            <RefreshCw className={cn("h-4 w-4 mr-2 text-indigo-500", loading && "animate-spin")} />
+            <RefreshCw className={cn("h-4 w-4 mr-2 text-primary", loading && "animate-spin")} />
             Refresh
           </Button>
         </div>
@@ -210,13 +210,13 @@ export function DashboardContent() {
       {/* ── TAB SELECTOR ── */}
       <Tabs defaultValue="live" className="space-y-6" onValueChange={setActiveTab}>
         <div className="flex justify-start">
-          <TabsList className="bg-gray-100 dark:bg-gray-900 border border-gray-200/50 dark:border-gray-800 p-1 rounded-xl">
-            <TabsTrigger value="live" className="rounded-lg text-xs font-semibold px-3 sm:px-4 py-2">Live Operations ⚙️</TabsTrigger>
-            <TabsTrigger value="control" className="rounded-lg text-xs font-semibold px-3 sm:px-4 py-2">Control Console 🎛️</TabsTrigger>
-            <TabsTrigger value="analytics" className="rounded-lg text-xs font-semibold px-3 sm:px-4 py-2">Analytics 📊</TabsTrigger>
-            <TabsTrigger value="intelligence" className="rounded-lg text-xs font-semibold px-3 sm:px-4 py-2">Farm AI 🧠</TabsTrigger>
-            <TabsTrigger value="digital-twin" className="rounded-lg text-xs font-semibold px-3 sm:px-4 py-2">Digital Twin 🗺️</TabsTrigger>
-            <TabsTrigger value="voice" className="rounded-lg text-xs font-semibold px-3 sm:px-4 py-2">Voice Assistant 🎙️</TabsTrigger>
+          <TabsList className="bg-gray-105 dark:bg-gray-900 border border-gray-200/50 dark:border-gray-800 p-1 rounded-xl">
+            <TabsTrigger value="live" className="font-header rounded-lg text-[10px] uppercase tracking-wider px-3 sm:px-4 py-2">Live Operations ⚙️</TabsTrigger>
+            <TabsTrigger value="control" className="font-header rounded-lg text-[10px] uppercase tracking-wider px-3 sm:px-4 py-2">Control Console 🎛️</TabsTrigger>
+            <TabsTrigger value="analytics" className="font-header rounded-lg text-[10px] uppercase tracking-wider px-3 sm:px-4 py-2">Analytics 📊</TabsTrigger>
+            <TabsTrigger value="intelligence" className="font-header rounded-lg text-[10px] uppercase tracking-wider px-3 sm:px-4 py-2">Farm AI 🧠</TabsTrigger>
+            <TabsTrigger value="digital-twin" className="font-header rounded-lg text-[10px] uppercase tracking-wider px-3 sm:px-4 py-2">Digital Twin 🗺️</TabsTrigger>
+            <TabsTrigger value="voice" className="font-header rounded-lg text-[10px] uppercase tracking-wider px-3 sm:px-4 py-2">Voice Assistant 🎙️</TabsTrigger>
           </TabsList>
         </div>
 
@@ -230,15 +230,15 @@ export function DashboardContent() {
           >
             {/* 3D Water Reservoirs Level Card */}
             <motion.div variants={itemVariants} className="md:col-span-1">
-              <Card className="border-none glass-container h-full flex flex-col justify-between overflow-hidden relative">
-                <CardHeader className="pb-2">
-                  <CardTitle className="flex items-center gap-2 text-base font-bold">
-                    <Waves className="h-5 w-5 text-blue-500 animate-pulse" />
+              <Card className="border-none glass-container soil-texture-glow h-full flex flex-col justify-between overflow-hidden relative">
+                <CardHeader className="pb-2 z-10">
+                  <CardTitle className="font-header flex items-center gap-2 text-base font-bold text-foreground">
+                    <Waves className="h-5 w-5 text-primary animate-pulse" />
                     Water Reservoirs
                   </CardTitle>
                   <CardDescription>Visual storage tank & aquifer state</CardDescription>
                 </CardHeader>
-                <CardContent className="flex flex-col items-center py-6 flex-1 justify-center">
+                <CardContent className="flex flex-col items-center py-6 flex-1 justify-center z-10">
                   {/* Detailed SVG Fluid Tank Graphic */}
                   <div className="relative w-36 h-48 flex items-center justify-center mb-5">
                     <svg className="w-full h-full" viewBox="0 0 160 200">
@@ -246,13 +246,13 @@ export function DashboardContent() {
                       <rect x="33" y="23" width="94" height="154" rx="17" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" className="dark:stroke-white/5 stroke-slate-900/5" />
                       
                       <line x1="30" y1="36" x2="38" y2="36" stroke="currentColor" className="text-slate-400 dark:text-slate-600" strokeWidth="2" />
-                      <text x="10" y="40" className="fill-slate-400 dark:fill-slate-500 text-[9px] font-bold">5.0k L</text>
+                      <text x="10" y="40" className="fill-slate-400 dark:fill-slate-500 text-[9px] font-bold font-telemetry">5.0k L</text>
                       <line x1="30" y1="68" x2="35" y2="68" stroke="currentColor" className="text-slate-300 dark:text-slate-700" strokeWidth="1.5" />
                       <line x1="30" y1="100" x2="38" y2="100" stroke="currentColor" className="text-slate-400 dark:text-slate-600" strokeWidth="2" />
-                      <text x="10" y="104" className="fill-slate-400 dark:fill-slate-500 text-[9px] font-bold">2.5k L</text>
+                      <text x="10" y="104" className="fill-slate-400 dark:fill-slate-500 text-[9px] font-bold font-telemetry">2.5k L</text>
                       <line x1="30" y1="132" x2="35" y2="132" stroke="currentColor" className="text-slate-300 dark:text-slate-700" strokeWidth="1.5" />
                       <line x1="30" y1="164" x2="38" y2="164" stroke="currentColor" className="text-slate-400 dark:text-slate-600" strokeWidth="2" />
-                      <text x="16" y="168" className="fill-slate-400 dark:fill-slate-500 text-[9px] font-bold">0 L</text>
+                      <text x="16" y="168" className="fill-slate-400 dark:fill-slate-500 text-[9px] font-bold font-telemetry">0 L</text>
                       
                       <defs>
                         <clipPath id="tank-clip">
@@ -293,10 +293,10 @@ export function DashboardContent() {
                     </svg>
                     
                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mt-4">
-                      <span className="text-2xl font-black text-slate-800 dark:text-white filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)]">
+                      <span className="text-2xl font-bold font-telemetry text-slate-800 dark:text-white filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)]">
                         {Math.round((tankStatus.storage_level_liters / tankStatus.storage_capacity_liters) * 100)}%
                       </span>
-                      <span className="text-[9px] text-slate-700/80 dark:text-white/80 font-bold mt-0.5">
+                      <span className="text-[10px] text-slate-700/80 dark:text-white/80 font-telemetry font-bold mt-0.5">
                         {tankStatus.storage_level_liters} L
                       </span>
                     </div>
@@ -368,13 +368,19 @@ export function DashboardContent() {
                         strokeWidth="3.5" 
                       />
                       {(solarStatus.solar_output_watts > 10 || solarStatus.charging) && (
-                        <path 
-                          d="M 58 80 L 112 80" 
-                          fill="none" 
-                          stroke="#fbbf24" 
-                          strokeWidth="2.5" 
-                          className="animate-flow-forward" 
-                        />
+                        <>
+                          <path 
+                            d="M 58 80 L 112 80" 
+                            fill="none" 
+                            stroke="url(#solarGlow)" 
+                            strokeWidth="2" 
+                          />
+                          <g style={{ transformOrigin: "58px 80px" }}>
+                            <circle cx="58" cy="80" r="3" fill="#fbbf24" className="animate-solar-flow-1 filter drop-shadow-[0_0_2px_#f59e0b]" />
+                            <circle cx="58" cy="80" r="2.5" fill="#fbbf24" className="animate-solar-flow-2 filter drop-shadow-[0_0_2px_#f59e0b]" />
+                            <circle cx="58" cy="80" r="2" fill="#fbbf24" className="animate-solar-flow-3 filter drop-shadow-[0_0_2px_#f59e0b]" />
+                          </g>
+                        </>
                       )}
 
                       {/* Grid -> Battery Path (Top to Center) */}
@@ -654,7 +660,7 @@ export function DashboardContent() {
 
           {/* Crop-Specific Irrigation Zones */}
           <div className="mt-8">
-            <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-4">Crop-Specific Irrigation Zones</h2>
+            <h2 className="text-lg font-header font-bold text-foreground mb-4">Crop-Specific Irrigation Zones</h2>
             <motion.div 
               variants={containerVariants}
               initial="hidden"
@@ -667,29 +673,29 @@ export function DashboardContent() {
                   <motion.div variants={itemVariants} key={zone.id}>
                     <Card className={cn(
                       "border-none glass-container transition-all overflow-hidden",
-                      isZoneOn && "ring-2 ring-emerald-500/50 dark:ring-emerald-400/50 shadow-lg shadow-emerald-500/10"
+                      isZoneOn && "ring-2 ring-primary/50 shadow-lg shadow-primary/10"
                     )}>
                       {/* Animated indicator bar */}
-                      <div className="h-1.5 w-full bg-gray-100 dark:bg-gray-800">
+                      <div className="h-1.5 w-full bg-muted">
                         {isZoneOn && (
-                          <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 animate-pulse w-full" />
+                          <div className="h-full bg-gradient-to-r from-primary to-accent animate-pulse w-full" />
                         )}
                       </div>
 
                       <CardHeader className="pb-3">
                         <div className="flex justify-between items-start">
                           <div>
-                            <CardTitle className="text-sm font-black flex items-center text-gray-800 dark:text-white">
+                            <CardTitle className="text-sm font-header font-bold flex items-center text-foreground">
                               {renderCropVector(zone.crop_type)}
                               {zone.name}
                             </CardTitle>
-                            <CardDescription className="text-[10px] mt-0.5">Crop: <strong>{zone.crop_type}</strong></CardDescription>
+                            <CardDescription className="text-[10px] mt-0.5 font-body">Crop: <strong>{zone.crop_type}</strong></CardDescription>
                           </div>
                           <Badge variant="outline" className={cn(
-                            "text-[10px] uppercase font-bold",
+                            "text-[10px] uppercase font-header font-bold",
                             isZoneOn 
-                              ? "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/20 dark:text-blue-400" 
-                              : "bg-gray-50 text-gray-500 border-gray-200 dark:bg-gray-800 dark:text-gray-400"
+                              ? "bg-primary/10 text-primary border-primary/20" 
+                              : "bg-muted text-muted-foreground border-border"
                           )}>
                             {isZoneOn ? "Flowing" : "Closed"}
                           </Badge>
@@ -702,14 +708,14 @@ export function DashboardContent() {
                           <div className="flex items-center gap-2.5">
                             <div className="relative w-14 h-14 flex items-center justify-center">
                               <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-                                <circle cx="18" cy="18" r="16" className="text-gray-150 dark:text-gray-800/80" strokeWidth="2.5" stroke="currentColor" fill="none" />
-                                <circle cx="18" cy="18" r="16" className="text-emerald-500" strokeWidth="2.5" strokeDasharray={`${zone.moisture}, 100`} strokeLinecap="round" stroke="currentColor" fill="none" />
+                                <circle cx="18" cy="18" r="16" className="text-muted/40 dark:text-muted/20" strokeWidth="2.5" stroke="currentColor" fill="none" />
+                                <circle cx="18" cy="18" r="16" className="text-primary" strokeWidth="2.5" strokeDasharray={`${zone.moisture}, 100`} strokeLinecap="round" stroke="currentColor" fill="none" />
                               </svg>
-                              <span className="absolute text-[11px] font-black text-gray-800 dark:text-white">{zone.moisture}%</span>
+                              <span className="absolute text-[11px] font-bold font-telemetry text-foreground">{zone.moisture}%</span>
                             </div>
                             <div>
-                              <span className="text-[9px] text-muted-foreground block leading-none">Moisture</span>
-                              <span className="text-[11px] font-bold text-gray-800 dark:text-white mt-1 block leading-none">{zone.moisture}% Status</span>
+                              <span className="text-[9px] text-muted-foreground block leading-none font-header">Moisture</span>
+                              <span className="text-[11px] font-bold font-header text-foreground mt-1 block leading-none">{zone.moisture}% Status</span>
                             </div>
                           </div>
                           

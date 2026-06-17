@@ -19,8 +19,12 @@
       "dest": "api/index.py"
     },
     {
+      "src": "/assets/(.*)",
+      "dest": "assets/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "client/$1"
+      "dest": "index.html"
     }
   ]
 }

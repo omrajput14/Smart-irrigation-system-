@@ -65,7 +65,7 @@ export function HomePage() {
             transition={{ delay: 0.3, duration: 0.8 }}
           >
             Grow Smarter with{" "}
-            <span className="bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 bg-clip-text text-transparent filter drop-shadow-[0_2px_10px_rgba(20,184,166,0.15)]">
+            <span className="font-header bg-gradient-to-r from-emerald-800 via-emerald-600 to-amber-700 dark:from-emerald-400 dark:via-emerald-500 dark:to-amber-500 bg-clip-text text-transparent filter drop-shadow-[0_2px_10px_rgba(16,185,129,0.1)]">
               EcoIrrigate
             </span>
           </motion.h1>
@@ -271,8 +271,8 @@ export function HomePage() {
                   <feature.icon className={cn("h-6 w-6", feature.color)} />
                 </motion.div>
                 <div className="space-y-1.5">
-                  <h3 className="text-base font-bold text-gray-800 dark:text-gray-150">{feature.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{feature.description}</p>
+                  <h3 className="font-header text-base font-bold text-foreground">{feature.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed font-body">{feature.description}</p>
                 </div>
               </CardContent>
             </Card>
@@ -294,7 +294,7 @@ export function HomePage() {
           <motion.div key={stat.label} variants={statVariants}>
             <Card className="border-none glass-container text-center p-5 card-hover overflow-hidden">
               <motion.div
-                className={cn("text-2xl font-black", stat.color, stat.glow)}
+                className={cn("text-xl font-bold font-telemetry", stat.color, stat.glow)}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -302,7 +302,7 @@ export function HomePage() {
               >
                 {stat.value}
               </motion.div>
-              <div className="text-[10px] uppercase font-bold text-muted-foreground mt-1 tracking-wider">{stat.label}</div>
+              <div className="text-[10px] uppercase font-bold text-muted-foreground mt-1 tracking-wider font-header">{stat.label}</div>
             </Card>
           </motion.div>
         ))}

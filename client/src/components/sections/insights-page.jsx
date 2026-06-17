@@ -21,9 +21,27 @@ export function InsightsPage() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center">
-        <Lightbulb className="h-10 w-10 text-emerald-500 animate-pulse mb-3" />
-        <p className="text-sm text-muted-foreground">Gathering farm intelligence...</p>
+      <div className="space-y-6 max-w-7xl mx-auto py-6">
+        <div className="flex items-center justify-between border-b pb-5 border-border/40">
+          <div className="space-y-2">
+            <div className="h-8 w-64 shimmer-bg rounded-xl" />
+            <div className="h-4 w-80 shimmer-bg rounded-lg" />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          {[1, 2, 3, 4].map((n) => (
+            <Card key={n} className="border border-border/20 glass-container overflow-hidden">
+              <CardContent className="p-6 flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl shimmer-bg flex-shrink-0" />
+                <div className="space-y-3 flex-1">
+                  <div className="h-5 w-44 shimmer-bg rounded-lg" />
+                  <div className="h-4 w-full shimmer-bg rounded" />
+                  <div className="h-4 w-3/4 shimmer-bg rounded" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     )
   }
@@ -175,39 +193,53 @@ export function InsightsPage() {
 
       {/* Insights List */}
       <motion.div className="space-y-4" variants={cV}>
-        {insights.map((ins, idx) => {
-          const s = getStyle(ins.type)
-          return (
-            <motion.div key={idx} variants={iV} whileHover={{ x: 6 }} className="w-full">
-              <Card className={cn(
-                "border-none glass-container border-l-4 transition-all duration-300 sensor-card-glow overflow-hidden", 
-                s.border
-              )}>
-                <CardContent className="p-5 flex items-start gap-4">
-                  <motion.div 
-                    className="mt-0.5 p-2 rounded-xl bg-gray-100/50 dark:bg-gray-800/40 flex-shrink-0"
-                    animate={ins.type === "critical" ? { scale: [1, 1.15, 1], filter: ["drop-shadow(0 0 0px rgba(239,68,68,0))", "drop-shadow(0 0 8px rgba(239,68,68,0.5))", "drop-shadow(0 0 0px rgba(239,68,68,0))"] } : {}}
-                    transition={{ duration: 1.8, repeat: Infinity }}
-                  >
-                    <s.Icon className={`h-6 w-6 ${s.ic}`} />
-                  </motion.div>
-                  <div className="flex-grow space-y-1">
-                    <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      <ins.icon className="h-4 w-4 text-muted-foreground" />
-                      <h3 className="font-bold text-sm text-gray-800 dark:text-gray-100">{ins.title}</h3>
-                      <Badge variant="outline" className={cn("text-[9px] font-extrabold uppercase rounded px-1.5 py-0.5", s.badge)}>{ins.type}</Badge>
+        {insights.length === 0 ? (
+          <motion.div variants={iV} className="w-full">
+            <Card className="border border-dashed border-border/40 glass-container p-10 text-center font-body">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-primary flex items-center justify-center mx-auto mb-3 animate-pulse">
+                <CheckCircle className="h-6 w-6" />
+              </div>
+              <h3 className="font-header font-bold text-sm text-foreground">All Fields Optimal</h3>
+              <p className="text-xs text-muted-foreground mt-1 max-w-[280px] mx-auto leading-relaxed">
+                Soil moisture, storage levels, and solar telemetry are running at healthy equilibrium states. No operations required.
+              </p>
+            </Card>
+          </motion.div>
+        ) : (
+          insights.map((ins, idx) => {
+            const s = getStyle(ins.type)
+            return (
+              <motion.div key={idx} variants={iV} whileHover={{ x: 6 }} className="w-full">
+                <Card className={cn(
+                  "border-none glass-container border-l-4 transition-all duration-300 sensor-card-glow overflow-hidden", 
+                  s.border
+                )}>
+                  <CardContent className="p-5 flex items-start gap-4">
+                    <motion.div 
+                      className="mt-0.5 p-2 rounded-xl bg-gray-100/50 dark:bg-gray-800/40 flex-shrink-0"
+                      animate={ins.type === "critical" ? { scale: [1, 1.15, 1], filter: ["drop-shadow(0 0 0px rgba(239,68,68,0))", "drop-shadow(0 0 8px rgba(239,68,68,0.5))", "drop-shadow(0 0 0px rgba(239,68,68,0))"] } : {}}
+                      transition={{ duration: 1.8, repeat: Infinity }}
+                    >
+                      <s.Icon className={`h-6 w-6 ${s.ic}`} />
+                    </motion.div>
+                    <div className="flex-grow space-y-1">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
+                        <ins.icon className="h-4 w-4 text-muted-foreground" />
+                        <h3 className="font-bold text-sm text-gray-800 dark:text-gray-100">{ins.title}</h3>
+                        <Badge variant="outline" className={cn("text-[9px] font-extrabold uppercase rounded px-1.5 py-0.5", s.badge)}>{ins.type}</Badge>
+                      </div>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{ins.message}</p>
+                      <p className="text-xs text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1 mt-1.5">
+                        <span>💡 Advice:</span>
+                        <span className="font-semibold">{ins.action}</span>
+                      </p>
                     </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{ins.message}</p>
-                    <p className="text-xs text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1 mt-1.5">
-                      <span>💡 Advice:</span>
-                      <span className="font-semibold">{ins.action}</span>
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )
-        })}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )
+          })
+        )}
       </motion.div>
     </motion.div>
   )

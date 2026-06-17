@@ -58,9 +58,16 @@ const AnimatedLegend = ({ payload }) => (
 export function HistoryChart({ data = [] }) {
   if (data.length === 0) {
     return (
-      <div className="flex flex-col justify-center items-center h-full gap-3">
-        <div className="text-4xl animate-pulse">📊</div>
-        <p className="text-slate-500 text-sm">No historical data logs loaded</p>
+      <div className="flex flex-col justify-center items-center h-full gap-3 py-10 text-center font-body">
+        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary text-lg animate-pulse">
+          📊
+        </div>
+        <div>
+          <p className="font-header font-bold text-foreground text-sm">No Telemetry Records Found</p>
+          <p className="text-xs text-muted-foreground mt-1 max-w-[260px] leading-relaxed">
+            Please verify your Blynk node telemetry connectivity or check database seeding parameters.
+          </p>
+        </div>
       </div>
     );
   }

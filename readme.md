@@ -1,5 +1,7 @@
 # 🌱 EcoIrrigate: Smart Irrigation & Farm Intelligence Platform (v2)
 
+### 🔗 Live Demo: [ecoirrigate.vercel.app](https://ecoirrigate.vercel.app)
+
 EcoIrrigate is a premium, cloud-integrated **Smart Irrigation & Farm Intelligence System** that combines physical microcontrollers, real-time telemetry pipelines, and predictive AI heuristics. It features an immersive **2.5D isometric farm digital twin blueprint** to monitor soil moisture, manage renewable solar grids, track water reservoir consumption, and dynamically automate field irrigation.
 
 [![React](https://img.shields.io/badge/Frontend-React%20v19-blue?style=for-the-badge&logo=react)](https://react.dev)
@@ -36,23 +38,35 @@ Calculates evaporative loss thresholds based on heat index (DHT11/LM35), trigger
 Interactive multi-line area charts (powered by Recharts) visualize soil moisture trends, water consumption volumes, and solar efficiency.
 ![Sensor History](./images/4_sensor_history.png)
 
----
-
 ## 🏛️ System Architecture & Data Pipeline
 
 EcoIrrigate utilizes a high-efficiency bidirectional data loop. Edge sensors feed telemetry packet streams into the FastAPI serverless API, updating the live Supabase PostgreSQL database while dynamically adjusting pump actuators.
 
-![EcoIrrigate Pipeline](./images/7_about_architecture.png)
+```mermaid
+flowchart LR
+    %% Styles
+    classDef hardware fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#10b981;
+    classDef cloud fill:#0f172a,stroke:#0ea5e9,stroke-width:2px,color:#0ea5e9;
+    classDef db fill:#0f172a,stroke:#f59e0b,stroke-width:2px,color:#f59e0b;
+    classDef api fill:#0f172a,stroke:#8b5cf6,stroke-width:2px,color:#8b5cf6;
+    classDef frontend fill:#0f172a,stroke:#ec4899,stroke-width:2px,color:#ec4899;
 
-```text
-[ Microcontroller: ESP8266 ]
-          │ (Reads DHT11 Temperature/Humidity + Soil Moisture + Rain)
-          ▼
-   [ FastAPI Gateway ] ──(Syncs & Restructures Data)──► [ Supabase Cloud Database ]
-          │                                                       │
-          │ (Runs Predictive AI Scoring & Checks Thresholds)     │
-          ▼                                                       ▼
-  [ Automated Relay Toggles ] ◄──(Updates Dashboard UI)── [ Live React.js Frontend ]
+    %% Nodes
+    SENSORS["🌱 Sensors<br>(Moisture, Temp, Rain)"]:::hardware
+    ESP["📶 IoT Edge<br>(ESP8266 NodeMCU)"]:::hardware
+    FASTAPI["⚡ FastAPI Engine<br>(Vercel Serverless)"]:::api
+    SUPABASE["🗄️ Supabase Cloud<br>(PostgreSQL DB)"]:::db
+    FRONTEND["💻 React Dashboard<br>(Vite Frontend)"]:::frontend
+    ACTUATOR["🔌 Solenoid Pump<br>(Relay Switches)"]:::hardware
+
+    %% Flows
+    SENSORS ──►|1. Polls Data| ESP
+    ESP ──►|2. POST Telemetry| FASTAPI
+    FASTAPI ──►|3. Write Log| SUPABASE
+    FASTAPI ──►|4. Compute AI Score| FASTAPI
+    FRONTEND ◄──►|5. Fetch & Control| FASTAPI
+    FASTAPI ──►|6. Trigger Valves| ESP
+    ESP ──►|7. Toggle State| ACTUATOR
 ```
 
 ### ⚙️ How It Works

@@ -76,19 +76,18 @@ export function RemoteControlPanel() {
       className="mb-6"
     >
       <Card className={cn(
-        "relative overflow-hidden border shadow-xl transition-all duration-700",
-        "bg-white dark:bg-gray-900",
+        "relative overflow-hidden glass-container soil-texture-glow border transition-all duration-700",
         pumpStatus
-          ? "border-green-300/60 dark:border-green-600/40 rcp-glow-on"
-          : "border-gray-200/80 dark:border-gray-700/60 rcp-glow-off"
+          ? "border-primary/40 shadow-lg shadow-primary/5"
+          : "border-border/60"
       )}>
         {/* Animated top gradient bar */}
         <div
-          className="h-2 w-full gradient-bar-animated"
+          className="h-1.5 w-full gradient-bar-animated"
           style={{
             background: pumpStatus
-              ? "linear-gradient(90deg, #22c55e, #10b981, #06d6a0, #34d399, #22c55e)"
-              : "linear-gradient(90deg, #6b7280, #9ca3af, #d1d5db, #9ca3af, #6b7280)",
+              ? "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary)))"
+              : "linear-gradient(90deg, hsl(var(--muted-foreground)/0.2), hsl(var(--muted-foreground)/0.4), hsl(var(--muted-foreground)/0.2))",
             backgroundSize: "300% 100%",
           }}
         />
@@ -103,32 +102,32 @@ export function RemoteControlPanel() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
               style={{
-                background: "radial-gradient(ellipse at center, rgba(34, 197, 94, 0.04) 0%, transparent 70%)",
-                boxShadow: "inset 0 0 60px rgba(34, 197, 94, 0.06), 0 0 40px rgba(34, 197, 94, 0.04)",
+                background: "radial-gradient(ellipse at center, hsla(var(--primary) / 0.05) 0%, transparent 70%)",
+                boxShadow: "inset 0 0 60px hsla(var(--primary) / 0.08), 0 0 40px hsla(var(--primary) / 0.04)",
               }}
             />
           )}
         </AnimatePresence>
 
-        <CardHeader className="pb-3 pt-5">
+        <CardHeader className="pb-3 pt-5 z-10">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-            <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl font-bold">
+            <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl font-header font-bold">
               <motion.div
                 className={cn(
                   "w-10 h-10 rounded-xl flex items-center justify-center",
-                  "bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-500/20"
+                  "bg-gradient-to-br from-primary to-emerald-800 text-primary-foreground shadow-lg shadow-primary/10"
                 )}
                 animate={{ rotate: [0, -8, 8, 0] }}
                 transition={{ duration: 3, repeat: Infinity, repeatDelay: 4 }}
               >
-                <Gamepad2 className="h-5 w-5 text-white" />
+                <Gamepad2 className="h-5 w-5" />
               </motion.div>
               <div>
-                <span className="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent dark:from-emerald-400 dark:to-teal-400">
+                <span className="bg-gradient-to-r from-primary via-emerald-600 to-amber-700 dark:from-primary dark:to-amber-500 bg-clip-text text-transparent">
                   Remote Control Panel
                 </span>
                 <span className="ml-1.5">🎮</span>
-                <div className="text-xs font-normal text-muted-foreground mt-0.5">
+                <div className="text-xs font-normal text-muted-foreground mt-0.5 font-body">
                   Manual system control & monitoring via Blynk
                 </div>
               </div>
@@ -146,17 +145,17 @@ export function RemoteControlPanel() {
                   <Badge
                     variant="outline"
                     className={cn(
-                      "flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold transition-all duration-500",
+                      "flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-header font-semibold transition-all duration-500",
                       pumpStatus
-                        ? "bg-green-50 text-green-700 border-green-300 dark:bg-green-900/30 dark:text-green-400 dark:border-green-700 rcp-badge-pulse"
-                        : "bg-gray-50 text-gray-600 border-gray-300 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600"
+                        ? "bg-primary/10 text-primary border-primary/30"
+                        : "bg-muted text-muted-foreground border-border"
                     )}
                   >
                     <motion.div
                       animate={pumpStatus ? { scale: [1, 1.4, 1] } : {}}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
-                      <Droplets className={cn("h-3.5 w-3.5", pumpStatus ? "text-green-500" : "text-gray-400")} />
+                      <Droplets className={cn("h-3.5 w-3.5", pumpStatus ? "text-primary" : "text-muted-foreground")} />
                     </motion.div>
                     {pumpStatus ? "Pump Running 💧" : "Pump Stopped ❌"}
                   </Badge>
@@ -166,17 +165,17 @@ export function RemoteControlPanel() {
               <Badge
                 variant="outline"
                 className={cn(
-                  "flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold transition-all duration-300",
+                  "flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-header font-semibold transition-all duration-300",
                   isAuto
-                    ? "bg-blue-50 text-blue-700 border-blue-300 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-700"
-                    : "bg-amber-50 text-amber-700 border-amber-300 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700"
+                    ? "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/20 dark:text-blue-400 dark:border-blue-800"
+                    : "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-800"
                 )}
               >
                 {isAuto ? <Settings2 className="h-3.5 w-3.5" /> : <Gamepad2 className="h-3.5 w-3.5" />}
                 {isAuto ? "Auto Mode ⚙️" : "Manual Mode 🎮"}
               </Badge>
               {/* Sync indicator */}
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-header">
                 <motion.div
                   className={cn("w-2 h-2 rounded-full", synced ? "bg-green-500" : "bg-yellow-500")}
                   animate={synced ? { scale: [1, 1.3, 1], opacity: [1, 0.6, 1] } : {}}
@@ -188,7 +187,7 @@ export function RemoteControlPanel() {
           </div>
         </CardHeader>
 
-        <CardContent className="pt-0 pb-5">
+        <CardContent className="pt-0 pb-5 z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
             {/* ────── LEFT: MODE TOGGLE ────── */}
@@ -307,39 +306,39 @@ export function RemoteControlPanel() {
             <div className={cn(
               "p-5 rounded-2xl border transition-all duration-700",
               pumpStatus
-                ? "bg-green-50/60 dark:bg-green-900/10 border-green-300/60 dark:border-green-700/50"
-                : "bg-gray-50/80 dark:bg-gray-800/60 border-gray-200/50 dark:border-gray-700/50"
+                ? "bg-primary/5 border-primary/30"
+                : "bg-muted/45 border-border"
             )}>
               <div className="flex items-center gap-3 mb-4">
                 <div className={cn(
                   "w-10 h-10 rounded-xl flex items-center justify-center shadow-sm transition-all duration-500",
                   pumpStatus
-                    ? "bg-gradient-to-br from-green-400 to-emerald-600"
-                    : "bg-gradient-to-br from-gray-300 to-gray-500 dark:from-gray-600 dark:to-gray-700"
+                    ? "bg-gradient-to-br from-primary to-emerald-800 text-primary-foreground"
+                    : "bg-muted text-muted-foreground border border-border"
                 )}>
                   <motion.div
                     animate={pumpStatus ? { rotate: [0, 10, -10, 0] } : {}}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   >
-                    <Droplets className="h-5 w-5 text-white" />
+                    <Droplets className="h-5 w-5" />
                   </motion.div>
                 </div>
                 <div>
-                  <div className="font-semibold text-sm">Pump Control</div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="font-header font-semibold text-sm">Pump Control</div>
+                  <div className="text-xs text-muted-foreground font-body">
                     Matches mode state
                   </div>
                 </div>
                 {/* Live indicator */}
-                <div className="ml-auto flex items-center gap-1.5">
+                <div className="ml-auto flex items-center gap-1.5 font-header">
                   <motion.div
-                    className={cn("w-2.5 h-2.5 rounded-full", pumpStatus ? "bg-green-500" : "bg-gray-400")}
+                    className={cn("w-2.5 h-2.5 rounded-full", pumpStatus ? "bg-primary" : "bg-muted-foreground/40")}
                     animate={pumpStatus ? { scale: [1, 1.6, 1], opacity: [1, 0.5, 1] } : {}}
                     transition={{ duration: 1.2, repeat: Infinity }}
                   />
                   <span className={cn(
                     "text-xs font-bold",
-                    pumpStatus ? "text-green-600 dark:text-green-400" : "text-gray-400"
+                    pumpStatus ? "text-primary" : "text-muted-foreground"
                   )}>
                     {pumpStatus ? "LIVE (V5=1)" : "OFF (V5=0)"}
                   </span>
@@ -350,16 +349,16 @@ export function RemoteControlPanel() {
               <div className="flex justify-center mb-5">
                 <motion.div
                   className={cn(
-                    "w-24 h-24 rounded-full flex items-center justify-center border-4 transition-all duration-700 cursor-default",
+                    "w-24 h-24 rounded-full flex items-center justify-center border-4 transition-all duration-700 cursor-default relative overflow-hidden",
                     pumpStatus
-                      ? "border-green-400 bg-green-50 dark:bg-green-900/30 dark:border-green-500"
-                      : "border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
+                      ? "border-primary bg-primary/10 shadow-lg shadow-primary/10"
+                      : "border-border bg-muted/40 shadow-inner"
                   )}
                   animate={pumpStatus ? {
                     boxShadow: [
-                      "0 0 0 0 rgba(34, 197, 94, 0)",
-                      "0 0 0 16px rgba(34, 197, 94, 0.12)",
-                      "0 0 0 0 rgba(34, 197, 94, 0)",
+                      "0 0 0 0 hsla(var(--primary) / 0)",
+                      "0 0 0 16px hsla(var(--primary) / 0.12)",
+                      "0 0 0 0 hsla(var(--primary) / 0)",
                     ],
                   } : {
                     boxShadow: "0 0 0 0 rgba(0, 0, 0, 0)",
@@ -372,7 +371,7 @@ export function RemoteControlPanel() {
                   >
                     <Power className={cn(
                       "h-10 w-10 transition-colors duration-500",
-                      pumpStatus ? "text-green-600 dark:text-green-400" : "text-gray-400 dark:text-gray-500"
+                      pumpStatus ? "text-primary" : "text-muted-foreground/60"
                     )} />
                   </motion.div>
                 </motion.div>
@@ -386,15 +385,15 @@ export function RemoteControlPanel() {
                   initial="initial"
                   animate="animate"
                   exit="exit"
-                  className="text-center mb-4"
+                  className="text-center mb-4 font-header"
                 >
                   <div className={cn(
                     "text-lg font-bold",
-                    pumpStatus ? "text-green-600 dark:text-green-400" : "text-gray-500 dark:text-gray-400"
+                    pumpStatus ? "text-primary" : "text-muted-foreground"
                   )}>
                     {pumpStatus ? "Pump Running 💧" : "Pump Stopped ❌"}
                   </div>
-                  <div className="text-xs text-muted-foreground mt-1">
+                  <div className="text-xs text-muted-foreground mt-1 font-body">
                     {pumpStatus ? "Water flow is active" : "No water flow"}
                   </div>
                 </motion.div>
@@ -408,10 +407,10 @@ export function RemoteControlPanel() {
                     onClick={() => handleCommand(1)}
                     disabled={isManual || actionLoading}
                     className={cn(
-                      "w-full h-14 text-sm font-bold transition-all duration-300 rounded-xl",
+                      "w-full h-14 text-xs font-header font-bold transition-all duration-300 rounded-xl uppercase tracking-wider",
                       !isManual && !actionLoading
-                        ? "bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-lg shadow-green-500/30 border-0"
-                        : ""
+                        ? "bg-gradient-to-r from-primary to-emerald-700 hover:from-primary hover:to-emerald-800 text-primary-foreground shadow-lg shadow-primary/10 border-0"
+                        : "bg-muted text-muted-foreground"
                     )}
                   >
                     {actionLoading && lastAction === "on" ? (
@@ -429,10 +428,10 @@ export function RemoteControlPanel() {
                     disabled={isAuto || actionLoading}
                     variant="outline"
                     className={cn(
-                      "w-full h-14 text-sm font-bold transition-all duration-300 rounded-xl",
+                      "w-full h-14 text-xs font-header font-bold transition-all duration-300 rounded-xl uppercase tracking-wider",
                       !isAuto && !actionLoading
-                        ? "border-red-300 text-red-600 hover:bg-red-50 dark:border-red-700 dark:text-red-400 dark:hover:bg-red-900/20 shadow-md shadow-red-500/10"
-                        : ""
+                        ? "border-destructive/30 text-destructive hover:bg-destructive/10 shadow-md shadow-destructive/5"
+                        : "bg-muted text-muted-foreground"
                     )}
                   >
                     {actionLoading && lastAction === "off" ? (
@@ -448,19 +447,19 @@ export function RemoteControlPanel() {
           </div>
 
           {/* Bottom status bar */}
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-2 px-2 py-2.5 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/50 dark:border-gray-700/30 text-xs text-muted-foreground">
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-2 px-2 py-2.5 rounded-xl bg-muted/40 border border-border/40 text-xs text-muted-foreground font-body">
             <div className="flex items-center gap-2">
-              <Activity className="h-3.5 w-3.5 text-green-500" />
+              <Activity className="h-3.5 w-3.5 text-primary" />
               <span>Polled from Blynk Cloud API</span>
             </div>
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1.5">
-                <CircleDot className="h-3.5 w-3.5" />
-                <span>Commands: <code className="text-[10px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">V1</code></span>
+              <div className="flex items-center gap-1.5 font-telemetry">
+                <CircleDot className="h-3.5 w-3.5 text-primary" />
+                <span>Commands: <code className="text-[10px] bg-muted px-1.5 py-0.5 rounded font-mono">V1</code></span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <Wifi className="h-3.5 w-3.5 text-green-500" />
-                <span>Status: <code className="text-[10px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">V5</code></span>
+              <div className="flex items-center gap-1.5 font-telemetry">
+                <Wifi className="h-3.5 w-3.5 text-primary" />
+                <span>Status: <code className="text-[10px] bg-muted px-1.5 py-0.5 rounded font-mono">V5</code></span>
               </div>
             </div>
           </div>
