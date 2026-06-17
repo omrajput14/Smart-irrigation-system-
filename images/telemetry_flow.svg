@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240" width="100%" height="100%">
+  <defs>
+    <!-- Glow Filters -->
+    <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glow-orange" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="grad-green" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="#10b981" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="grad-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="#0ea5e9" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="grad-purple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="#8b5cf6" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    .node-text {
+      font-family: 'Outfit', 'Segoe UI', Roboto, sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      fill: #94a3b8;
+    }
+    .node-title {
+      font-family: 'Outfit', 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      fill: #f8fafc;
+    }
+    .flow-line {
+      stroke-dasharray: 8 12;
+      animation: progress 4s linear infinite;
+    }
+    .flow-reverse {
+      stroke-dasharray: 8 12;
+      animation: progress-reverse 4s linear infinite;
+    }
+    @keyframes progress {
+      to {
+        stroke-dashoffset: -40;
+      }
+    }
+    @keyframes progress-reverse {
+      to {
+        stroke-dashoffset: 40;
+      }
+    }
+  </style>
+
+  <!-- Background Canvas Card -->
+  <rect width="800" height="240" rx="16" fill="#070a0f" stroke="#1e293b" stroke-width="1.5" />
+  
+  <!-- Subtle Grid Lines for Tech Blueprint Vibe -->
+  <path d="M 0 40 L 800 40 M 0 80 L 800 80 M 0 120 L 800 120 M 0 160 L 800 160 M 0 200 L 800 200" stroke="#0f172a" stroke-width="1" />
+  <path d="M 100 0 L 100 240 M 200 0 L 200 240 M 300 0 L 300 240 M 400 0 L 400 240 M 500 0 L 500 240 M 600 0 L 600 240 M 700 0 L 700 240" stroke="#0f172a" stroke-width="1" />
+
+  <!-- ================= CONNECTION PATHS ================= -->
+  <!-- 1. Sensors to Edge Gateway -->
+  <path class="flow-line" d="M 100 110 L 280 110" stroke="#10b981" stroke-width="2.5" fill="none" filter="url(#glow-green)" />
+  
+  <!-- 2. Edge Gateway to Cloud Engine -->
+  <path class="flow-line" d="M 320 110 L 480 110" stroke="#0ea5e9" stroke-width="2.5" fill="none" filter="url(#glow-blue)" />
+
+  <!-- 3. Cloud Engine to Live Dashboard -->
+  <path class="flow-line" d="M 520 95 C 580 65, 620 65, 680 95" stroke="#8b5cf6" stroke-width="2.5" fill="none" filter="url(#glow-purple)" />
+  <path class="flow-reverse" d="M 680 125 C 620 155, 580 155, 520 125" stroke="#0ea5e9" stroke-width="2.5" fill="none" filter="url(#glow-blue)" />
+
+  <!-- 4. Actuator Solenoid feedback (Downwards path from Edge) -->
+  <path class="flow-line" d="M 300 140 L 300 190 L 120 190" stroke="#f59e0b" stroke-width="2.5" fill="none" filter="url(#glow-orange)" />
+
+  <!-- ================= PULSING RADAR RINGS ================= -->
+  <!-- Sensor Node Radar -->
+  <circle cx="100" cy="110" r="24" fill="none" stroke="#10b981" stroke-width="1" opacity="0.8">
+    <animate attributeName="r" values="24;48" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.8;0" dur="3s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- Edge Node Radar -->
+  <circle cx="300" cy="110" r="28" fill="none" stroke="#0ea5e9" stroke-width="1" opacity="0.8">
+    <animate attributeName="r" values="28;54" dur="2.5s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.8;0" dur="2.5s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- Cloud Node Radar -->
+  <circle cx="500" cy="110" r="28" fill="none" stroke="#8b5cf6" stroke-width="1" opacity="0.8">
+    <animate attributeName="r" values="28;54" dur="3.5s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.8;0" dur="3.5s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- ================= SOLID NODES ================= -->
+  <!-- Node 1: 🌱 Sensors -->
+  <circle cx="100" cy="110" r="24" fill="#0b131f" stroke="#10b981" stroke-width="2.5" />
+  <text x="100" y="114" font-size="18" text-anchor="middle">🌱</text>
+  <text class="node-title" x="100" y="154" text-anchor="middle">Sensors</text>
+  <text class="node-text" x="100" y="170" text-anchor="middle">Telemetry</text>
+
+  <!-- Node 2: 📶 Edge Gateway (ESP8266) -->
+  <circle cx="300" cy="110" r="28" fill="#0b131f" stroke="#0ea5e9" stroke-width="2.5" />
+  <text x="300" y="116" font-size="20" text-anchor="middle">📶</text>
+  <text class="node-title" x="300" y="154" text-anchor="middle">IoT Edge</text>
+  <text class="node-text" x="300" y="170" text-anchor="middle">ESP8266</text>
+
+  <!-- Node 3: ⚡ Cloud Engine (FastAPI) -->
+  <circle cx="500" cy="110" r="28" fill="#0b131f" stroke="#8b5cf6" stroke-width="2.5" />
+  <text x="500" y="116" font-size="20" text-anchor="middle">⚡</text>
+  <text class="node-title" x="500" y="154" text-anchor="middle">FastAPI</text>
+  <text class="node-text" x="500" y="170" text-anchor="middle">Vercel API</text>
+
+  <!-- Node 4: 💻 Dashboard (Live Twin) -->
+  <circle cx="700" cy="110" r="28" fill="#0b131f" stroke="#ec4899" stroke-width="2.5" />
+  <text x="700" y="116" font-size="20" text-anchor="middle">💻</text>
+  <text class="node-title" x="700" y="154" text-anchor="middle">Dashboard</text>
+  <text class="node-text" x="700" y="170" text-anchor="middle">React SPA</text>
+
+  <!-- Node 5: 🔌 Solenoid Valve Actuator -->
+  <circle cx="100" cy="190" r="16" fill="#0b131f" stroke="#f59e0b" stroke-width="2" />
+  <text x="100" y="195" font-size="12" text-anchor="middle">🔌</text>
+  <text class="node-title" x="156" y="195" text-anchor="start" font-size="12">Solenoid Pump</text>
+
+</svg>
