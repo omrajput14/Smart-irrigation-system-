@@ -60,13 +60,13 @@ flowchart LR
     ACTUATOR["🔌 Solenoid Pump<br>(Relay Switches)"]:::hardware
 
     %% Flows
-    SENSORS ──►|1. Polls Data| ESP
-    ESP ──►|2. POST Telemetry| FASTAPI
-    FASTAPI ──►|3. Write Log| SUPABASE
-    FASTAPI ──►|4. Compute AI Score| FASTAPI
-    FRONTEND ◄──►|5. Fetch & Control| FASTAPI
-    FASTAPI ──►|6. Trigger Valves| ESP
-    ESP ──►|7. Toggle State| ACTUATOR
+    SENSORS -->|1. Polls Data| ESP
+    ESP -->|2. POST Telemetry| FASTAPI
+    FASTAPI -->|3. Write Log| SUPABASE
+    FASTAPI -->|4. Compute AI Score| FASTAPI
+    FRONTEND <-->|5. Fetch & Control| FASTAPI
+    FASTAPI -->|6. Trigger Valves| ESP
+    ESP -->|7. Toggle State| ACTUATOR
 ```
 
 ### ⚙️ How It Works
