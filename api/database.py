@@ -23,27 +23,170 @@ if use_supabase:
         print(f"⚠️ Failed to init Supabase client: {e}. Falling back to local JSON database.")
         use_supabase = False
 
+# In-memory database fallback representing initial seed data
+_in_memory_db = {
+  "zones": [
+    {
+      "id": "A",
+      "name": "Zone A - North Plantation",
+      "crop_type": "Banana",
+      "moisture": 45,
+      "moisture_raw": 562,
+      "moisture_threshold": 50,
+      "pump_status": "ON",
+      "auto_mode": False,
+      "water_flow_rate": 15.2
+    },
+    {
+      "id": "B",
+      "name": "Zone B - Greenhouse Beta",
+      "crop_type": "Tomato",
+      "moisture": 38,
+      "moisture_raw": 634,
+      "moisture_threshold": 40,
+      "pump_status": "OFF",
+      "auto_mode": True,
+      "water_flow_rate": 8.5
+    },
+    {
+      "id": "C",
+      "name": "Zone C - South Ridge",
+      "crop_type": "Sugarcane",
+      "moisture": 62,
+      "moisture_raw": 389,
+      "moisture_threshold": 55,
+      "pump_status": "OFF",
+      "auto_mode": True,
+      "water_flow_rate": 20.0
+    }
+  ],
+  "tank_status": {
+    "storage_level_liters": 3100,
+    "storage_capacity_liters": 5000,
+    "borewell_status": "ACTIVE",
+    "borewell_flow_rate": 25.0,
+    "safety_warning": "NONE",
+    "estimated_hours_left": 48
+  },
+  "solar_status": {
+    "battery_pct": 82,
+    "charging": True,
+    "solar_output_watts": 480,
+    "pump_consumption_watts": 0,
+    "solar_efficiency": 94.5,
+    "grid_backup_active": False
+  },
+  "weather_forecast": {
+    "current_temp": 32.5,
+    "current_humidity": 42.0,
+    "current_rain_prob": 12.0,
+    "rain_expected_6h": False,
+    "rain_expected_24h": True,
+    "forecast_description": "Clear day, light drizzle expected tonight",
+    "recommended_delay_hours": 0
+  },
+  "water_savings": {
+    "total_consumed_liters": 125250,
+    "total_saved_liters": 39140,
+    "efficiency_percentage": 31.2
+  },
+  "history": [
+    {
+      "timestamp": "2026-06-10T08:00:00Z",
+      "moisture_A": 65,
+      "moisture_B": 55,
+      "moisture_C": 70,
+      "water_used": 1200,
+      "solar_power": 350,
+      "battery": 60
+    },
+    {
+      "timestamp": "2026-06-11T08:00:00Z",
+      "moisture_A": 58,
+      "moisture_B": 48,
+      "moisture_C": 65,
+      "water_used": 950,
+      "solar_power": 410,
+      "battery": 75
+    },
+    {
+      "timestamp": "2026-06-12T08:00:00Z",
+      "moisture_A": 50,
+      "moisture_B": 42,
+      "moisture_C": 60,
+      "water_used": 1400,
+      "solar_power": 450,
+      "battery": 85
+    },
+    {
+      "timestamp": "2026-06-13T08:00:00Z",
+      "moisture_A": 44,
+      "moisture_B": 39,
+      "moisture_C": 56,
+      "water_used": 1800,
+      "solar_power": 490,
+      "battery": 90
+    },
+    {
+      "timestamp": "2026-06-14T08:00:00Z",
+      "moisture_A": 60,
+      "moisture_B": 52,
+      "moisture_C": 68,
+      "water_used": 500,
+      "solar_power": 250,
+      "battery": 80
+    },
+    {
+      "timestamp": "2026-06-15T08:00:00Z",
+      "moisture_A": 52,
+      "moisture_B": 45,
+      "moisture_C": 62,
+      "water_used": 1100,
+      "solar_power": 470,
+      "battery": 88
+    },
+    {
+      "timestamp": "2026-06-16T08:00:00Z",
+      "moisture_A": 45,
+      "moisture_B": 38,
+      "moisture_C": 62,
+      "water_used": 1350,
+      "solar_power": 480,
+      "battery": 82
+    }
+  ]
+}
+
 def load_local_db():
-    if not DB_FILE.exists():
-        # Fallback raw initialization if file somehow missing
-        DB_FILE.parent.mkdir(parents=True, exist_ok=True)
-        default_data = {
-            "zones": [],
-            "tank_status": {},
-            "solar_status": {},
-            "weather_forecast": {},
-            "water_savings": {},
-            "history": []
-        }
-        with open(DB_FILE, "w") as f:
-            json.dump(default_data, f, indent=2)
-    with open(DB_FILE, "r") as f:
-        return json.load(f)
+    global _in_memory_db
+    try:
+        if DB_FILE.exists():
+            with open(DB_FILE, "r") as f:
+                return json.load(f)
+    except Exception as e:
+        print(f"⚠️ Failed to read DB_FILE: {e}. Using in-memory fallback.")
+    
+    # If the file does not exist, try creating it (works in writable local dev environments)
+    try:
+        if not DB_FILE.exists():
+            DB_FILE.parent.mkdir(parents=True, exist_ok=True)
+            with open(DB_FILE, "w") as f:
+                json.dump(_in_memory_db, f, indent=2)
+            return _in_memory_db
+    except Exception as e:
+        print(f"⚠️ Failed to initialize default DB_FILE: {e}. Using in-memory fallback.")
+        
+    return _in_memory_db
 
 def save_local_db(data):
-    DB_FILE.parent.mkdir(parents=True, exist_ok=True)
-    with open(DB_FILE, "w") as f:
-        json.dump(data, f, indent=2)
+    global _in_memory_db
+    _in_memory_db = data
+    try:
+        DB_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with open(DB_FILE, "w") as f:
+            json.dump(data, f, indent=2)
+    except Exception as e:
+        print(f"⚠️ Failed to write update to DB_FILE: {e}. Saved in-memory only.")
 
 # --- ZONES ---
 def get_zones():
